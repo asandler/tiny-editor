@@ -20,11 +20,12 @@ def create_doc user_id, folder_id, name
     }])[0]
 end
 
-def init_user username
+def init_user username, is_private
     u = User.create!([
         {
             :email => username,
             :password => "123123",
+            :private => is_private,
         },
     ])[0]
 
@@ -46,5 +47,5 @@ def init_user username
     create_doc(u.id, root_dir.id, "Root doc 2")
 end
 
-init_user("user_1")
-init_user("user_2")
+init_user("user_1", true)
+init_user("user_2", false)

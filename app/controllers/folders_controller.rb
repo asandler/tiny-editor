@@ -3,11 +3,11 @@ class FoldersController < ApplicationController
     skip_before_action :require_login, only: [:get], :raise => false
 
     def get
-        get_folder_contents(params[:id])
+        get_folder_contents(params[:id], nil)
     end
 
     def edit
-        @folder = get_by_id_user_id(params[:id])
+        @folder = find_folder(params[:id], current_user.id)
         @all_folders = Folder.where(user_id: current_user.id)
     end
 
@@ -23,7 +23,7 @@ class FoldersController < ApplicationController
         # validate(params)
 
         if params[:id]
-            update_folder(get_by_id_user_id(params[:id]), params)
+            update_folder(find_folder(params[:id], current_user.id), params)
         else
             update_folder(new_folder(params), params)
         end
@@ -35,8 +35,8 @@ class FoldersController < ApplicationController
     end
 
 private
-    def get_folder_contents id
-        @folder = Folder.find(id) or not_found
+    def get_folder_contents id, user_id
+        @folder = find_folder(id, user_id)
         @child_folders = Folder.where(parent_folder_id: id)
         @docs = Document.where(folder_id: id)
 
@@ -45,8 +45,17 @@ private
         end
     end
 
-    def get_by_id_user_id id
-        Folder.find_by(id: id, user_id: current_user.id) or not_found
+    def find_folder id, user_id
+        if user_id
+            f = Folder.find_by(id: id, user_id: user_id)
+            not_found if not f or f.user_id != current_user.id
+            return f
+        else
+            f = Folder.find(id)
+            u = User.find(f.user_id)
+            not_found if not f or u.private
+            return f
+        end
     end
 
     def new_folder params
