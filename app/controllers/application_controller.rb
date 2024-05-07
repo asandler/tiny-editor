@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
     end
 
     def bad_request
-        render :nothing => true, :status => 400
+        raise ActionController::BadRequest.new("Bad Request")
     end
 end

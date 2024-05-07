@@ -8,6 +8,7 @@ class FoldersController < ApplicationController
 
     def edit
         @folder = find_user_folder(params[:id])
+        bad_request if not @folder.parent_folder_id
         @all_folders = Folder.where(user_id: current_user.id)
     end
 
@@ -20,7 +21,7 @@ class FoldersController < ApplicationController
     end
 
     def save
-        # validate(params)
+        # params = validate(params)
 
         if params[:id]
             update_folder(find_user_folder(params[:id]), params)
@@ -78,5 +79,19 @@ private
         else
             internal_error
         end
+    end
+
+    def validate_params params
+        begin
+            Integer(params[:id])
+        rescue
+            bad_request
+        end
+
+        return {
+            :id => params[:id],
+            :name => params[:name],
+            :parent_folder_id => params[:parent_folder_id]
+        }
     end
 end
