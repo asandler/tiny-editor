@@ -1,38 +1,42 @@
 <div class="header">
     <div>
-        <form action="/home" method="get"><input type="submit" value="Home" class="link-button"/></form>
-    </div>
-    &nbsp;
-    <div>
-        <form action="/docs/new">
-            <input type="hidden" name="folder_id" value="<%= @folder.id %>">
-            <input type="submit" value="New document" class="link-button"/>
+        <form action="/home" method="get">
+            <input type="submit" value="Home" class="link-button"/>
+            <input type="hidden" name="user_id" value="<%= @folder.user_id %>">
         </form>
     </div>
-    &nbsp;
-    <div>
-        <form action="/folders/new">
-            <input type="hidden" name="parent_folder_id" value="<%= @folder.id %>">
-            <input type="submit" value="New folder" class="link-button"/>
-        </form>
-    </div>
-
-    <% if @folder.parent_folder_id %>
-        &nbsp;
-        <div>
-            <form action="/folders/<%= @folder.id %>/edit" method="get">
-                <input type="submit" value="Edit" class="link-button"/>
-            </form>
-        </div>
-        &nbsp;
-        <div>
-            <form method="post" action="/folders/<%= @folder.id %>/destroy" onclick="return confirm('Are you sure?')">
-                <input type="submit" class="link-button" value="Delete"/>
-            </form>
-        </div>
-    <% end %>
 
     <% if current_user %>
+        &nbsp;
+        <div>
+            <form action="/docs/new">
+                <input type="hidden" name="folder_id" value="<%= @folder.id %>">
+                <input type="submit" value="New document" class="link-button"/>
+            </form>
+        </div>
+        &nbsp;
+        <div>
+            <form action="/folders/new">
+                <input type="hidden" name="parent_folder_id" value="<%= @folder.id %>">
+                <input type="submit" value="New folder" class="link-button"/>
+            </form>
+        </div>
+
+        <% if @folder.parent_folder_id %>
+            &nbsp;
+            <div>
+                <form action="/folders/<%= @folder.id %>/edit" method="get">
+                    <input type="submit" value="Edit" class="link-button"/>
+                </form>
+            </div>
+            &nbsp;
+            <div>
+                <form method="post" action="/folders/<%= @folder.id %>/destroy" onclick="return confirm('Are you sure?')">
+                    <input type="submit" class="link-button" value="Delete"/>
+                </form>
+            </div>
+        <% end %>
+
         &nbsp;
         <div>
             <form action="/users/<%= current_user.id %>/edit">

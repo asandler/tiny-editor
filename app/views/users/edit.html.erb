@@ -1,4 +1,15 @@
-<%= link_to "All users", users_path %>
+<div class="header">
+    <div>
+        <form action="/users" method="get"><input type="submit" value="All users" class="link-button"/></form>
+    </div>
+    &nbsp;
+    <div>
+        <form action="/logout">
+            <input type="submit" value="Logout" class="link-button"/>
+        </form>
+    </div>
+    &nbsp;
+</div>
 
 <h2>Edit user info</h2>
 

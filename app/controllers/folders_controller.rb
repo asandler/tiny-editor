@@ -1,6 +1,6 @@
 class FoldersController < ApplicationController
     before_action :require_login
-    skip_before_action :require_login, only: [:get], :raise => false
+    skip_before_action :require_login, only: [:get, :home], :raise => false
 
     def get
         get_folder_contents(params[:id])
@@ -13,7 +13,12 @@ class FoldersController < ApplicationController
     end
 
     def home
-        redirect_to controller: "folders", action: "get", id: current_user.root_folder_id
+        if current_user
+            redirect_to controller: "folders", action: "get", id: current_user.root_folder_id
+        else
+            u = User.find(params[:user_id]) || not_found
+            redirect_to controller: "folders", action: "get", id: u.root_folder_id
+        end
     end
 
     def new
