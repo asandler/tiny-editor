@@ -11,6 +11,12 @@
 
     <input type="text" name="doc_name" value="<%= @doc.name %>" size="77"/>
     <br><br>
+    Parent folder: <select name="folder_id">
+    <% @all_folders.each do |f| %>
+        <option value="<%= f.id %>" <%= "selected" if f.id == @doc.folder_id %>> <%= f.name %> </option>
+    <% end %>
+    </select>
+    <br><br>
 
     <div class="mono"><textarea name="doc_data" cols="80" rows="40"><%= @doc.data %></textarea></div>
     <input type="submit"/>

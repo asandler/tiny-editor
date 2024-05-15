@@ -7,7 +7,7 @@ class SorceryCore < ActiveRecord::Migration[7.0]
 
       t.timestamps null: false
 
-      t.integer :root_directory_id
+      t.integer :root_folder_id
       t.boolean :private
     end
   end

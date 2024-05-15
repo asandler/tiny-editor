@@ -1,5 +1,30 @@
-<h1>Editing user</h1>
+<%= link_to "All users", users_path %>
 
-<%= render 'form' %>
+<h2>Edit user info</h2>
 
-<%= link_to 'Back', users_path %>
+<form method="post" action="/users/<%= @user.id %>/save">
+  <div class="field">
+    <label>Username</label><br>
+    <input type="text" name="email" value="<%= @user.email %>" disabled=true>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <label>Password</label><br>
+    <input type="password" name="password">
+  </div>
+
+  <br>
+
+  <div class="field">
+    <label>Private</label><br>
+    <input type="checkbox" name="private" checked=<%= @user.private %>>
+  </div>
+
+  <br>
+
+  <div class="actions">
+    <input type="submit" value="Save">
+  </div>
+</form>

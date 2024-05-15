@@ -1,70 +1,53 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update, :destroy]
-  skip_before_action :require_login, only: [:index, :new, :create], :raise => false
+    before_action :set_user, only: [:edit, :save, :destroy]
+    skip_before_action :require_login, only: [:new, :create], :raise => false
 
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to home_path_url, notice: 'User was successfully created.' }
-        format.json { render status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    def index
+        @users = User.all
     end
-  end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    def new
+        @user = User.new
     end
-  end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+    def create
+        u = User.new(user_params)
+        if u.save
+            f = Folder.new(user_id: u.id, name: "Root folder")
+            f.save || internal_error
+
+            p u
+            u.update_attribute("root_folder_id", f.id) || internal_error
+
+            redirect_to home_path_url
+        else
+            render :new
+        end
     end
-  end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
+    def edit
+    end
+
+    def save
+        forbidden if current_user.id != @user.id
+        if @user.update(user_params)
+            redirect_to home_path_url
+        else
+            render :edit
+        end
+    end
+
+    def destroy
+        @user.destroy
+        redirect_to users_url
+    end
+
+private
     def set_user
-      @user = User.find(params[:id])
+        @user = User.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password)
+        params.permit(:email, :password, :private)
     end
 end

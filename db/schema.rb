@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_18_172757) do
     t.string "salt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "root_directory_id"
+    t.integer "root_folder_id"
     t.boolean "private"
     t.index ["email"], name: "index_users_on_email", unique: true
   end

@@ -8,6 +8,7 @@ class DocsController < ApplicationController
 
     def edit
         @doc = find_user_doc(params[:id])
+        @all_folders = Folder.where(user_id: current_user.id)
     end
 
     def new
@@ -17,9 +18,9 @@ class DocsController < ApplicationController
     def save
         # validate params later
         if params[:id]
-            update_doc(find_user_doc(params[:id]), params[:doc_name], params[:doc_data])
+            update_doc(find_user_doc(params[:id]), params[:doc_name], params[:doc_data], params[:folder_id])
         else
-            update_doc(new_doc(params), params[:doc_name], params[:doc_data])
+            update_doc(new_doc(params), params[:doc_name], params[:doc_data], params[:folder_id])
         end
     end
 
@@ -48,15 +49,13 @@ private
     end
 
     def new_doc params
-        return Document.new(
-            folder_id: params[:folder_id].to_i,
-            user_id: current_user.id,
-        )
+        return Document.new(user_id: current_user.id)
     end
 
-    def update_doc doc, name, data
+    def update_doc doc, name, data, folder_id
         doc.name = name
         doc.data = data
+        doc.folder_id = folder_id
         if doc.save
             redirect_to "/docs/#{doc.id}"
         else

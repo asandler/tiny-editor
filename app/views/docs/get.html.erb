@@ -1,6 +1,6 @@
 <div class="header">
     <div>
-        <form action="/home" method="get"><input type="submit" value="Home" class="link-button"/></form>
+        <form action="/folders/<%= @doc.folder_id %>" method="get"><input type="submit" value="Back" class="link-button"/></form>
     </div>
 
     <% if @doc.user_id == current_user.id %>

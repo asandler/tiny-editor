@@ -13,7 +13,7 @@ class FoldersController < ApplicationController
     end
 
     def home
-        redirect_to controller: "folders", action: "get", id: current_user.root_directory_id
+        redirect_to controller: "folders", action: "get", id: current_user.root_folder_id
     end
 
     def new

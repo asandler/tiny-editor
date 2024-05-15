@@ -34,7 +34,7 @@ def init_user username, is_private
         :user_id => u.id,
     }])[0]
 
-    u.root_directory_id = root_dir.id
+    u.root_folder_id = root_dir.id
     u.save!(validate: false)
 
     5.times do |i|

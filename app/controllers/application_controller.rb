@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
     def bad_request
         raise ActionController::BadRequest.new("Bad Request")
     end
+
+    def forbidden
+        raise "Forbidden"
+    end
 end
