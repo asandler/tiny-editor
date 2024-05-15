@@ -8,6 +8,8 @@ gem "puma"
 gem "sqlite3", "~> 1.4"
 gem "sorcery"
 
+gem "turbo-rails"
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
