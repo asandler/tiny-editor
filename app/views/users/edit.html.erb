@@ -19,7 +19,7 @@
 
   <div class="field">
     <label>Private</label><br>
-    <input type="checkbox" name="private" checked=<%= @user.private %>>
+    <input type="checkbox" name="private" <%= "checked" if @user.private %>>
   </div>
 
   <br>

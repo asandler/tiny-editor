@@ -48,6 +48,8 @@ private
     end
 
     def user_params
-        params.permit(:email, :password, :private)
+        fp = params.permit(:id, :email, :password, :private)
+        fp[:private] = fp[:private] == "on" ? true : false
+        return fp
     end
 end
