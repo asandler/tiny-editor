@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:edit, :save, :destroy]
-    before_action :require_login
-    skip_before_action :require_login, only: [:new, :create], :raise => false
+    before_action :require_admin, only: [:index]
+    before_action :require_registration_open, only: [:new, :create]
+    before_action :check_user_access, only: [:edit, :save]
 
     def index
         @users = User.all
@@ -30,7 +31,6 @@ class UsersController < ApplicationController
     end
 
     def save
-        forbidden if current_user.id != @user.id
         if @user.update(user_params)
             redirect_to root_path
         else
@@ -46,6 +46,18 @@ class UsersController < ApplicationController
 private
     def set_user
         @user = User.find(params[:id])
+    end
+
+    def require_admin
+        redirect_to root_path if not current_user or not current_user.admin?
+    end
+
+    def require_registration_open
+        redirect_to root_path if not Rails.application.config.registration_open
+    end
+
+    def check_user_access
+        forbidden if current_user.id != @user.id and !current_user.admin?
     end
 
     def user_params

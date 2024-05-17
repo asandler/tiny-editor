@@ -4,10 +4,12 @@
             <input type="submit" value="Home" class="link-button"/>
         </form>
     </div>
-    &nbsp;
-    <div>
-        <form action="/users" method="get"><input type="submit" value="All users" class="link-button"/></form>
-    </div>
+    <% if current_user.admin? %>
+        &nbsp;
+        <div>
+            <form action="/users" method="get"><input type="submit" value="All users" class="link-button"/></form>
+        </div>
+    <% end %>
     &nbsp;
     <div>
         <form action="/logout">

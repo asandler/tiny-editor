@@ -1,4 +1,4 @@
-<% if @registration_open %>
+<% if Rails.application.config.registration_open %>
     <div class="header">
         <div>
             <form action="/users/new" method="get">

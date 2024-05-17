@@ -3,7 +3,6 @@ class UserSessionsController < ApplicationController
 
     def new
         @user = User.new
-        @registration_open = true
     end
 
     def create
