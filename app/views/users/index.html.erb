@@ -1,10 +1,14 @@
-<div>
-    <form action="/" method="get"><input type="submit" value="Home" class="link-button"/></form>
+<div class="header">
+    <div>
+        <form action="/" method="get"><input type="submit" value="Home" class="link-button"/></form>
+    </div>
+    &nbsp;|&nbsp;
+    <div>
+        <form action="/users/new" method="get"><input type="submit" value="New user" class="link-button"/></form>
+    </div>
 </div>
 
 <h2>Listing users</h2>
-
-<%= link_to "New user", "/users/new" %>
 
 <ul>
 <% @users.each do |user| %>
