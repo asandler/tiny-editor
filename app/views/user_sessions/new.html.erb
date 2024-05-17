@@ -1,4 +1,14 @@
-<h1>Login</h1>
+<% if @registration_open %>
+    <div class="header">
+        <div>
+            <form action="/users/new" method="get">
+                <input type="submit" value="Register" class="link-button"/>
+            </form>
+        </div>
+    </div>
+<% end %>
+
+<h2>Login</h2>
 
 <%= form_tag user_sessions_path, :method => :post do %>
   <div class="field">

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  root "user_sessions#new"
-
-  get "/home", to: "folders#home", :as => :home_path
+  root "application#home"
 
   get "/docs/new", to: "docs#new"
   post "/docs/save", to: "docs#save"

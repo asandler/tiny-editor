@@ -12,15 +12,6 @@ class FoldersController < ApplicationController
         @all_folders = Folder.where(user_id: current_user.id)
     end
 
-    def home
-        if current_user
-            redirect_to controller: "folders", action: "get", id: current_user.root_folder_id
-        else
-            u = User.find(params[:user_id]) || not_found
-            redirect_to controller: "folders", action: "get", id: u.root_folder_id
-        end
-    end
-
     def new
         @parent_folder_id = params[:parent_folder_id]
     end
@@ -37,7 +28,7 @@ class FoldersController < ApplicationController
 
     def destroy
         Folder.destroy(params[:id])
-        redirect_to home_path_url
+        redirect_to root_path
     end
 
 private

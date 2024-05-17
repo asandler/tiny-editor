@@ -7,7 +7,7 @@
     </div>
 
     <% if current_user %>
-        &nbsp;
+        &nbsp;|&nbsp;
         <div>
             <form action="/docs/new">
                 <input type="hidden" name="folder_id" value="<%= @folder.id %>">
@@ -23,7 +23,7 @@
         </div>
 
         <% if @folder.parent_folder_id %>
-            &nbsp;
+            &nbsp;|&nbsp;
             <div>
                 <form action="/folders/<%= @folder.id %>/edit" method="get">
                     <input type="submit" value="Edit" class="link-button"/>
@@ -37,7 +37,7 @@
             </div>
         <% end %>
 
-        &nbsp;
+        &nbsp;|&nbsp;
         <div>
             <form action="/users/<%= current_user.id %>/edit">
                 <input type="submit" value="<%= current_user.email %>" class="link-button"/>

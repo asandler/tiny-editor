@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:edit, :save, :destroy]
+    before_action :require_login
     skip_before_action :require_login, only: [:new, :create], :raise => false
 
     def index
@@ -19,7 +20,7 @@ class UsersController < ApplicationController
             p u
             u.update_attribute("root_folder_id", f.id) || internal_error
 
-            redirect_to home_path_url
+            redirect_to root_path
         else
             render :new
         end
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
     def save
         forbidden if current_user.id != @user.id
         if @user.update(user_params)
-            redirect_to home_path_url
+            redirect_to root_path
         else
             render :edit
         end

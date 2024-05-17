@@ -26,7 +26,7 @@ class DocsController < ApplicationController
 
     def destroy
         Document.destroy(params[:id])
-        redirect_to home_path_url
+        redirect_to root_path
     end
 
 private
