@@ -3,24 +3,24 @@ class DocsController < ApplicationController
     skip_before_action :require_login, only: [:get], :raise => false
 
     def get
-        @doc = find_doc(params[:id])
+        @doc = find_doc(doc_params[:id])
     end
 
     def edit
-        @doc = find_user_doc(params[:id])
+        @doc = find_user_doc(doc_params[:id])
         @all_folders = Folder.where(user_id: current_user.id)
     end
 
     def new
-        @folder_id = params[:folder_id]
+        @folder_id = doc_params[:folder_id]
     end
 
     def save
-        # validate params later
-        if params[:id]
-            update_doc(find_user_doc(params[:id]), params[:doc_name], params[:doc_data], params[:folder_id])
+        dp = doc_params
+        if dp[:id]
+            update_doc(find_user_doc(dp[:id]), dp)
         else
-            update_doc(new_doc(params), params[:doc_name], params[:doc_data], params[:folder_id])
+            update_doc(new_doc(params), dp)
         end
     end
 
@@ -52,14 +52,32 @@ private
         return Document.new(user_id: current_user.id)
     end
 
-    def update_doc doc, name, data, folder_id
-        doc.name = name
-        doc.data = data
-        doc.folder_id = folder_id
+    def update_doc doc, pars
+        doc.name = pars[:name] if pars[:name]
+        doc.data = pars[:data] if pars[:data]
+        doc.folder_id = pars[:folder_id] if pars[:folder_id]
         if doc.save
             redirect_to "/docs/#{doc.id}"
         else
             internal_error
         end
+    end
+
+    def doc_params
+        begin
+            Integer(params[:id]) if params[:id]
+            Integer(params[:folder_id]) if params[:folder_id]
+            if params[:name]
+                bad_request if params[:name].length == 0
+                bad_request if params[:name].length > Rails.application.config.max_document_name_length
+            end
+            if params[:data]
+                bad_request if params[:data].length > Rails.application.config.max_document_length
+            end
+        rescue
+            bad_request
+        end
+
+        return params.permit(:id, :folder_id, :name, :data)
     end
 end

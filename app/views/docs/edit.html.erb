@@ -9,7 +9,7 @@
 <form action="/docs/new">
 <% end %>
 
-    <input type="text" name="doc_name" value="<%= @doc.name %>" size="77"/>
+    <input type="text" name="name" value="<%= @doc.name %>" size="80"/>
     <br><br>
     Parent folder: <select name="folder_id">
     <% @all_folders.each do |f| %>
@@ -18,6 +18,6 @@
     </select>
     <br><br>
 
-    <div class="mono"><textarea name="doc_data" cols="80" rows="40"><%= @doc.data %></textarea></div>
+    <div class="mono"><textarea name="data" cols="80" rows="40"><%= @doc.data %></textarea></div>
     <input type="submit"/>
 </form>
