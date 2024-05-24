@@ -3,31 +3,29 @@ class FoldersController < ApplicationController
     skip_before_action :require_login, only: [:get, :home], :raise => false
 
     def get
-        get_folder_contents(params[:id])
+        get_folder_contents(folder_params[:id])
     end
 
     def edit
-        @folder = find_user_folder(params[:id])
-        bad_request if not @folder.parent_folder_id
+        @folder = find_user_folder(folder_params[:id])
         @all_folders = Folder.where(user_id: current_user.id)
     end
 
     def new
-        @parent_folder_id = params[:parent_folder_id]
+        @parent_folder_id = folder_params[:parent_folder_id]
     end
 
     def save
-        # params = validate(params)
-
-        if params[:id]
-            update_folder(find_user_folder(params[:id]), params)
+        fp = folder_params
+        if fp[:id]
+            update_folder(find_user_folder(fp[:id]), fp)
         else
-            update_folder(new_folder(params), params)
+            update_folder(new_folder(fp), fp)
         end
     end
 
     def destroy
-        Folder.destroy(params[:id])
+        Folder.destroy(folder_params[:id])
         redirect_to root_path
     end
 
@@ -60,16 +58,18 @@ private
         return f
     end
 
-    def new_folder params
+    def new_folder pars
         return Folder.new(
-            parent_folder_id: params[:parent_folder_id].to_i,
+            parent_folder_id: pars[:parent_folder_id].to_i,
             user_id: current_user.id,
         )
     end
 
-    def update_folder folder, params
-        folder.name = params[:name]
-        folder.parent_folder_id = params[:parent_folder_id]
+    def update_folder folder, pars
+        folder.name = pars[:name]
+        if folder.parent_folder_id
+            folder.parent_folder_id = pars[:parent_folder_id]
+        end
         if folder.save
             redirect_to "/folders/#{folder.id}"
         else
@@ -77,17 +77,18 @@ private
         end
     end
 
-    def validate_params params
+    def folder_params
         begin
-            Integer(params[:id])
+            Integer(params[:id]) if params[:id]
+            Integer(params[:parent_folder_id]) if params[:parent_folder_id]
+            if params[:name]
+                bad_request if params[:name].length == 0
+                bad_request if params[:name].length > Rails.application.config.max_folder_name_length
+            end
         rescue
             bad_request
         end
 
-        return {
-            :id => params[:id],
-            :name => params[:name],
-            :parent_folder_id => params[:parent_folder_id]
-        }
+        return params.permit(:id, :name, :parent_folder_id)
     end
 end

@@ -12,5 +12,6 @@ module TinyEditor
     config.load_defaults 7.0
 
     config.registration_open = false
+    config.max_folder_name_length = 160
   end
 end

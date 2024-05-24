@@ -21,14 +21,13 @@
                 <input type="submit" value="New folder" class="link-button"/>
             </form>
         </div>
-
+        &nbsp;|&nbsp;
+        <div>
+            <form action="/folders/<%= @folder.id %>/edit" method="get">
+                <input type="submit" value="Edit" class="link-button"/>
+            </form>
+        </div>
         <% if @folder.parent_folder_id %>
-            &nbsp;|&nbsp;
-            <div>
-                <form action="/folders/<%= @folder.id %>/edit" method="get">
-                    <input type="submit" value="Edit" class="link-button"/>
-                </form>
-            </div>
             &nbsp;
             <div>
                 <form method="post" action="/folders/<%= @folder.id %>/destroy" onclick="return confirm('Are you sure?')">
