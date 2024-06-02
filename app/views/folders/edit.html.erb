@@ -4,7 +4,7 @@
 <br>
 
 <form action="/folders/<%= @folder.id %>/save" method="post">
-    Name: <input type="text" name="name" value="<%= @folder.name %>" size="80"/>
+    Name: <input type="text" name="name" value="<%= @folder.name %>" size="80" maxlength="<%= Rails.application.config.max_folder_name_length %>"/>
     <br><br>
     <% if @folder.parent_folder_id %>
         Parent folder: <select name="parent_folder_id">
