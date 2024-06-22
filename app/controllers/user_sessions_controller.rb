@@ -9,10 +9,12 @@ class UserSessionsController < ApplicationController
         if @user = login(params[:email], params[:password])
             redirect_to root_path
         end
+        flash[:alert] = "Login failed"
+        redirect_to login_path
     end
 
     def destroy
         logout
-        redirect_to root_path
+        redirect_to login_path
     end
 end

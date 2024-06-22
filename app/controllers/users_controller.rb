@@ -23,7 +23,8 @@ class UsersController < ApplicationController
 
             redirect_to root_path
         else
-            render :new
+            flash[:alert] = u.errors.full_messages.join("; ")
+            redirect_to "/users/new"
         end
     end
 

@@ -34,3 +34,12 @@
     <input type="submit" value="Create">
   </div>
 </form>
+
+<br>
+<div class="error">
+    <% flash.each do |type, msg| %>
+    <div>
+        <%= msg %>
+    </div>
+    <% end %>
+</div>

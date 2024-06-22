@@ -25,3 +25,12 @@
     <%= submit_tag "Login" %>
   </div>
 <% end %>
+
+<br>
+<div class="error">
+    <% flash.each do |type, msg| %>
+    <div>
+        <%= msg %>
+    </div>
+    <% end %>
+</div>

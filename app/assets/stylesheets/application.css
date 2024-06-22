@@ -37,3 +37,7 @@ body {
 .doc-header {
     font-size: 1.5em;
 }
+
+.error {
+    color: #FF0000;
+}

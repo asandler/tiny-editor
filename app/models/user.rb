@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, presence: true
   validates :password, length: { minimum: 6 }
 
   has_many :documents, dependent: :destroy
