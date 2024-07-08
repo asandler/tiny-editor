@@ -42,5 +42,11 @@
                 <input type="submit" value="<%= current_user.email %>" class="link-button"/>
             </form>
         </div>
+    <% else %>
+        <div>
+            <form action="/login" method="get">
+                <input type="submit" value="Login" class="link-button"/>
+            </form>
+        </div>
     <% end %>
 </div>
