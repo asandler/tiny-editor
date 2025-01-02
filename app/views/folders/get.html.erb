@@ -6,7 +6,7 @@
 
 <ul>
 <% if @parent_folder %>
-    <li> <a href="/folders/<%=@parent_folder.id%>">../</a>
+    <li> <a href="/folders/<%=@parent_folder.id%>" id="Up">../</a>
 <% end %>
 <% @child_folders.each do |f| %>
     <li> <a href="/folders/<%=f.id%>"><%= f.name %>/</a>
@@ -15,3 +15,13 @@
     <li> <a href="/docs/<%=d.id%>"><%= d.name %></a>
 <% end %>
 </ul>
+
+<script type="text/javascript">
+document.addEventListener("keydown", keyDownTextField, false);
+
+function keyDownTextField(e) {
+    if (e.keyCode == 37) {
+        document.getElementById('Up').click();
+    }
+}
+</script>

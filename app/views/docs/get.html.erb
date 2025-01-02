@@ -1,13 +1,13 @@
 <div class="header">
     <div>
-        <form action="/folders/<%= @doc.folder_id %>" method="get"><input type="submit" value="Back" class="link-button"/></form>
+        <form action="/folders/<%= @doc.folder_id %>" method="get"><input type="submit" id="Back" value="Back" class="link-button"/></form>
     </div>
 
     <% if current_user and @doc.user_id == current_user.id %>
         &nbsp;
         <div>
             <form action="/docs/<%= @doc.id %>/edit" method="get">
-                <input type="submit" value="Edit" class="link-button"/>
+                <input type="submit" id="Edit" value="Edit" class="link-button"/>
             </form>
         </div>
         &nbsp;
@@ -25,3 +25,15 @@
 </div>
 <br>
 <div class="mono"><%= @doc.data %></div>
+
+<script type="text/javascript">
+document.addEventListener("keydown", keyDownTextField, false);
+
+function keyDownTextField(e) {
+    if (e.keyCode == 69) {
+        document.getElementById('Edit').click();
+    } else if (e.keyCode == 37) {
+        document.getElementById('Back').click();
+    }
+}
+</script>
