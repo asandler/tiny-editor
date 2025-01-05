@@ -62,10 +62,10 @@
         document.getElementById('folder-title-edit').style.display = "none";
     }
 
-    document.addEventListener("keydown", keyDownHandler, false);
-    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("keydown", keyDownHandlerFolder, false);
+    document.addEventListener("keyup", keyUpHandlerFolder, false);
 
-    function keyDownHandler(e) {
+    function keyDownHandlerFolder(e) {
         if (e.keyCode == 37) {
             document.getElementById('Up').click();
         } else if (e.keyCode == 69) {
@@ -75,7 +75,7 @@
         }
     }
 
-    function keyUpHandler(e) {
+    function keyUpHandlerFolder(e) {
         if (e.keyCode == 69) {
             document.getElementById('folder-title-edit-text-input').focus();
         }
