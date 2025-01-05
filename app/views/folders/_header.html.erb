@@ -23,8 +23,8 @@
         </div>
         &nbsp;|&nbsp;
         <div>
-            <form action="/folders/<%= @folder.id %>/edit" method="get">
-                <input type="submit" value="Edit" class="link-button"/>
+            <form onclick="showFolderTitleEdit(); return false;">
+                <input type="submit" id="Edit" value="Edit" class="link-button"/>
             </form>
         </div>
         <% if @folder.parent_folder_id %>
@@ -50,3 +50,34 @@
         </div>
     <% end %>
 </div>
+
+<script type="text/javascript">
+    function showFolderTitleEdit() {
+        document.getElementById('folder-title').style.display = "none";
+        document.getElementById('folder-title-edit').style.display = "block";
+    }
+
+    function showFolderTitle() {
+        document.getElementById('folder-title').style.display = "block";
+        document.getElementById('folder-title-edit').style.display = "none";
+    }
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    function keyDownHandler(e) {
+        if (e.keyCode == 37) {
+            document.getElementById('Up').click();
+        } else if (e.keyCode == 69) {
+            showFolderTitleEdit();
+        } else if (e.keyCode == 27) {
+            showFolderTitle();
+        }
+    }
+
+    function keyUpHandler(e) {
+        if (e.keyCode == 69) {
+            document.getElementById('folder-title-edit-text-input').focus();
+        }
+    }
+</script>

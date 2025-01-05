@@ -2,7 +2,23 @@
 
 <br>
 
-<div class="folder-header"><b><%= @folder.name %></b></div>
+<div class="folder-title" id="folder-title"><b><%= @folder.name %></b></div>
+
+<div class="folder-title-edit" id="folder-title-edit" style="display: none;">
+    <form action="/folders/<%= @folder.id %>/save" method="post">
+        <input type="text" id="folder-title-edit-text-input" name="name" value="<%= @folder.name %>" size="40" maxlength="<%= Rails.application.config.max_folder_name_length %>"/>
+        <% if @folder.parent_folder_id %>
+            Parent folder: <select name="parent_folder_id">
+            <% @all_folders.each do |f| %>
+                <% if f.id != @folder.id %>
+                    <option value="<%= f.id %>" <%= "selected" if f.id == @folder.parent_folder_id %>> <%= f.name %> </option>
+                <% end %>
+            <% end %>
+            </select>
+        <% end %>
+        <input type="submit"/>
+    </form>
+</div>
 
 <ul>
 <% if @parent_folder %>
@@ -15,13 +31,3 @@
     <li> <a href="/docs/<%=d.id%>"><%= d.name %></a>
 <% end %>
 </ul>
-
-<script type="text/javascript">
-document.addEventListener("keydown", keyDownTextField, false);
-
-function keyDownTextField(e) {
-    if (e.keyCode == 37) {
-        document.getElementById('Up').click();
-    }
-}
-</script>
