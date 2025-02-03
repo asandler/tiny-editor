@@ -4,12 +4,14 @@ class FoldersController < ApplicationController
 
     def get
         get_folder_contents(folder_params[:id])
-        @all_folders = Folder.where(user_id: current_user.id)
+        @all_folders = []
+        @all_folders = Folder.where(user_id: current_user.id) if current_user
     end
 
     def edit
         @folder = find_user_folder(folder_params[:id])
-        @all_folders = Folder.where(user_id: current_user.id)
+        @all_folders = []
+        @all_folders = Folder.where(user_id: current_user.id) if current_user
     end
 
     def new
