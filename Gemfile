@@ -5,7 +5,7 @@ gem "rails"
 gem "sprockets-rails"
 
 gem "puma"
-gem "sqlite3", "~> 1.4"
+gem "sqlite3"
 gem "sorcery"
 
 gem "turbo-rails"
@@ -20,5 +20,5 @@ gem "stimulus-rails"
 # gem "bcrypt", "~> 3.1.7"
 
 group :development do
-  gem 'rails_db', '>= 2.3.1'
+  gem "rails_db"
 end
