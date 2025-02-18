@@ -50,34 +50,3 @@
         </div>
     <% end %>
 </div>
-
-<script type="text/javascript">
-    function showFolderTitleEdit() {
-        document.getElementById('folder-title').style.display = "none";
-        document.getElementById('folder-title-edit').style.display = "block";
-    }
-
-    function showFolderTitle() {
-        document.getElementById('folder-title').style.display = "block";
-        document.getElementById('folder-title-edit').style.display = "none";
-    }
-
-    document.addEventListener("keydown", keyDownHandlerFolder, false);
-    document.addEventListener("keyup", keyUpHandlerFolder, false);
-
-    function keyDownHandlerFolder(e) {
-        if (e.keyCode == 37) {
-            document.getElementById('folder-up').click();
-        } else if (e.keyCode == 69) {
-            showFolderTitleEdit();
-        } else if (e.keyCode == 27) {
-            showFolderTitle();
-        }
-    }
-
-    function keyUpHandlerFolder(e) {
-        if (e.keyCode == 69) {
-            document.getElementById('folder-title-edit-text-input').focus();
-        }
-    }
-</script>

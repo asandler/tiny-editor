@@ -8,6 +8,71 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <script type="text/javascript">
+        folderEditing = false;
+
+        function showFolderTitleEdit() {
+            folderEditing = true;
+            document.getElementById('folder-title').style.display = "none";
+            document.getElementById('folder-title-edit').style.display = "block";
+        };
+
+        function showFolderTitle() {
+            folderEditing = false;
+            document.getElementById('folder-title').style.display = "block";
+            document.getElementById('folder-title-edit').style.display = "none";
+        };
+
+        document.addEventListener("keydown", keyDownHandlerFolder, false);
+        document.addEventListener("keyup", keyUpHandlerFolder, false);
+
+        function keyDownHandlerFolder(e) {
+            if (e.keyCode == 37) {
+                if (folderEditing) {
+                    return;
+                }
+
+                href = document.getElementById('folder-up');
+                if (href != null) {
+                    window.location = href;
+                    return;
+                }
+
+                href = document.getElementById('document-back');
+                if (href != null) {
+                    window.location = href;
+                    return;
+                }
+
+            } else if (e.keyCode == 69) {
+                href = document.getElementById('document-edit');
+                if (href != null) {
+                    window.location = href;
+                    return;
+                }
+
+                showFolderTitleEdit();
+
+            } else if (e.keyCode == 27) {
+                href = document.getElementById('document-back-2');
+                if (href != null) {
+                    window.location = href;
+                    return;
+                }
+
+                showFolderTitle();
+            }
+        };
+
+        function keyUpHandlerFolder(e) {
+            if (e.keyCode == 69) {
+                folderEditing = true;
+                document.getElementById('folder-title-edit-text-input').focus();
+            }
+        };
+
+    </script>
   </head>
 
   <body>

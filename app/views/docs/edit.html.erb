@@ -1,5 +1,7 @@
 <div>
     <form action="/docs/<%= @doc.id %>" method="get"><input type="submit" id="Back" value="Back" class="link-button"/></form>
+    <!--- this is for navigation with keys -->
+    <a href="/docs/<%= @doc.id %>" id="document-back-2"></a>
 </div>
 <br>
 
@@ -21,13 +23,3 @@
     <div class="mono"><textarea name="data" cols="80" rows="40" maxlength="<%= Rails.application.config.max_document_length %>"><%= @doc.data %></textarea></div>
     <input type="submit"/>
 </form>
-
-<script type="text/javascript">
-    document.addEventListener("keydown", keyDownHandlerDocumentEdit, false);
-
-    function keyDownHandlerDocumentEdit(e) {
-        if (e.keyCode == 27) {
-            document.getElementById('Back').click();
-        }
-    }
-</script>
