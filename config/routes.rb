@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   post "/users/create", to: "users#create"
   get "/users/:id/edit", to: "users#edit"
   post "/users/:id/save", to: "users#save"
-  post "/users/:id/destroy", to: "users#destroy"
+  get "/users/:id/destroy", to: "users#destroy"
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout

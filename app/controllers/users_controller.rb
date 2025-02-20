@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:edit, :save, :destroy]
-    before_action :require_admin, only: [:index]
+    before_action :require_admin, only: [:index, :destroy]
     before_action :require_registration_open, only: [:new, :create]
-    before_action :check_user_access, only: [:edit, :save]
+    before_action :check_user_access, only: [:edit, :save, :destroy]
 
     def index
         @users = User.all
@@ -18,7 +18,6 @@ class UsersController < ApplicationController
             f = Folder.new(user_id: u.id, name: "Root folder")
             f.save || internal_error
 
-            p u
             u.update_attribute("root_folder_id", f.id) || internal_error
 
             redirect_to root_path
@@ -47,10 +46,11 @@ class UsersController < ApplicationController
 private
     def set_user
         @user = User.find(params[:id])
+        redirect_to root_path if not @user
     end
 
     def require_admin
-        redirect_to root_path if not current_user or not current_user.admin?
+        forbidden if not current_user or not current_user.admin?
     end
 
     def require_registration_open
@@ -58,7 +58,7 @@ private
     end
 
     def check_user_access
-        forbidden if current_user.id != @user.id and !current_user.admin?
+        forbidden if current_user.id != @user.id and not current_user.admin?
     end
 
     def user_params
